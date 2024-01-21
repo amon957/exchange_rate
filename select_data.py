@@ -1,4 +1,17 @@
-import pandas as pd
+from datetime import datetime
 
-exchange_rates = pd.read_csv('Data/historical_data.csv')
-exchange_rates
+def select_data(data,query={'currency':'US DOLLAR','start_date':'2017-01-01','end_date':datetime.now().strftime('%Y-%m-%d')}):
+    '''
+    This function filters data based on currency and a range of date
+    data: pandas dataframe
+    query (Dictionary):
+        currency: country name (default: US Dollar)
+        start_date: from which date (default: 01/01/2017)
+        end_date: to which date (default: current date)
+    Example:
+        {currency: 'United States',start_date: '01/01/2017', end_date: '01/01/2024'}
+    '''
+    filtered_data = data[(data['Date'] >= query['start_date']) &
+                         (data['Date'] <= query['end_date']) &
+                         (data['Currency'] == query['currency'])]
+    return filtered_data
